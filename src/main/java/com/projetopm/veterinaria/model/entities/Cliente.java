@@ -27,7 +27,7 @@ public class Cliente implements Serializable {
     @NotNull
     private String cpf;
 
-    @Column(nullable = false, length = 150)
+    @Column(unique = true,nullable = false, length = 150)
     @NotNull
     private String email;
 
