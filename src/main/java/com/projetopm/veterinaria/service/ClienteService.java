@@ -59,7 +59,7 @@ public class ClienteService {
             ResultSet rs = statement.executeQuery();
 
             while(rs.next()){
-                if(rs.getString(3).equals(email) && rs.getString(5).equals(senha)){
+                if(rs.getString(4).equals(email) && rs.getString(6).equals(senha)){
                     flag = 1;
                     System.out.println(flag);
                 } else{

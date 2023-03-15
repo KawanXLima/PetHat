@@ -15,7 +15,7 @@ public class DBUtil {
             String driver = "com.mysql.cj.jdbc.Driver";
             String url = "jdbc:mysql://localhost:3306/veterinaria?useSSL=false";
             String user = "root";
-            String password = "Valdesian&1";
+            String password = "alunofatec";
 
             try{
                 Class.forName(driver);
