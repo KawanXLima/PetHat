@@ -36,14 +36,22 @@ public class ClienteService {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public Cliente atualizarCliente(Integer id, Cliente clienteAtualizado){
-        return repository.findById(id).map(cliente -> {
-            cliente.setNome(clienteAtualizado.getNome());
-            cliente.setCpf(clienteAtualizado.getCpf());
-            cliente.setEmail(clienteAtualizado.getEmail());
-            cliente.setSenha(clienteAtualizado.getSenha());
-            return repository.save(cliente);
-        }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public Cliente atualizarCliente(String cpf, Cliente clienteAtualizado){
+        Cliente cliente = repository.findBycpf(cpf);
+
+        cliente.setNome(clienteAtualizado.getNome());
+        cliente.setEmail(clienteAtualizado.getEmail());
+        cliente.setSenha(clienteAtualizado.getSenha());
+        return repository.save(cliente);
+
+
+//        return repository.findById(id).map(cliente -> {
+//            cliente.setNome(clienteAtualizado.getNome());
+//            cliente.setCpf(clienteAtualizado.getCpf());
+//            cliente.setEmail(clienteAtualizado.getEmail());
+//            cliente.setSenha(clienteAtualizado.getSenha());
+//            return repository.save(cliente);
+//        }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public void deletarCliente(Integer id) {

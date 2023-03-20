@@ -26,9 +26,9 @@ public class ClienteController {
         return ResponseEntity.ok(cliente);
     }
 
-    @PutMapping("/perfil/alterar/{id}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Integer id, @RequestBody Cliente clienteAtualizado){
-        Cliente cliente = service.atualizarCliente(id, clienteAtualizado);
+    @PutMapping("/perfil/alterar/{cpf}")
+    public ResponseEntity atualizarCliente(@PathVariable String cpf, @RequestBody Cliente clienteAtualizado){
+        Cliente cliente = service.atualizarCliente(cpf, clienteAtualizado);
         return ResponseEntity.ok(cliente);
     }
 
@@ -51,5 +51,32 @@ public class ClienteController {
     public ResponseEntity<Cliente> buscarPorEmail(@PathVariable String email){
         Cliente cliente = service.buscarPorEmail(email);
         return ResponseEntity.ok(cliente);
+    }
+    @GetMapping("/perfil/id/{email}")
+    public ResponseEntity<Integer> buscarid(@PathVariable String email){
+        Cliente cliente = service.buscarPorEmail(email);
+        return ResponseEntity.ok(cliente.getId());
+    }
+    @GetMapping("/perfil/nome/{email}")
+    public ResponseEntity<String> buscarNomePorEmail(@PathVariable String email){
+        Cliente cliente = service.buscarPorEmail(email);
+        return ResponseEntity.ok(cliente.getNome());
+    }
+
+    @GetMapping("/perfil/email/{email}")
+    public ResponseEntity<String> buscarEmail(@PathVariable String email){
+        Cliente cliente = service.buscarPorEmail(email);
+        return ResponseEntity.ok(cliente.getEmail());
+    }
+
+    @GetMapping("/perfil/cpf/{email}")
+    public ResponseEntity<String> buscarcpf(@PathVariable String email){
+        Cliente cliente = service.buscarPorEmail(email);
+        return ResponseEntity.ok(cliente.getCpf());
+    }
+    @GetMapping("/perfil/senha/{email}")
+    public ResponseEntity<String> buscarSenha(@PathVariable String email){
+        Cliente cliente = service.buscarPorEmail(email);
+        return ResponseEntity.ok(cliente.getSenha());
     }
 }
