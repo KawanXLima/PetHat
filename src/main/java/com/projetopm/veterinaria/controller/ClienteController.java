@@ -52,4 +52,10 @@ public class ClienteController {
         Cliente cliente = service.buscarPorEmail(email);
         return ResponseEntity.ok(cliente);
     }
+
+    @GetMapping("/perfil/id/{email}")
+    public ResponseEntity<Integer> buscarid(@PathVariable String email){
+        Cliente cliente = service.buscarPorEmail(email);
+        return ResponseEntity.ok(cliente.getId());
+    }
 }
