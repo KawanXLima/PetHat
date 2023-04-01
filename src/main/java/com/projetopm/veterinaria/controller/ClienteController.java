@@ -40,12 +40,13 @@ public class ClienteController {
 
     @GetMapping("/login/{email}/{senha}")
     @ResponseStatus(HttpStatus.OK)
-    public boolean login(@PathVariable String email, @PathVariable String senha){
+    public ResponseEntity<Boolean> login(@PathVariable String email, @PathVariable String senha){
         int flag = service.validacaoLogin(email, senha);
         if(flag == 0){
-            return false;
+            return ResponseEntity.ok(false);
         }
-        return true;
+            return ResponseEntity.ok(true);
+
     }
     @GetMapping("/perfil/{email}")
     public ResponseEntity<Cliente> buscarPorEmail(@PathVariable String email){

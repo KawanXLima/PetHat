@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
-    @Query(value = "SELECT * FROM veterinaria.tb_cliente WHERE email = :email", nativeQuery = true)
+
     Cliente findByEmail(String email);
+
+    Cliente findByEmailAndSenha(String email, String senha);
 }
