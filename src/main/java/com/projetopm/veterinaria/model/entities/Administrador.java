@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_usuario")
+@Table(name = "tb_veterinario")
 public class Administrador implements Serializable {
 
     private static final long serialVersionUID = 1L;
