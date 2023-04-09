@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario implements Serializable {
+public class Administrador implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,15 +18,15 @@ public class Usuario implements Serializable {
     @JsonProperty("_id")
     private Integer id;
 
-    @Column(unique = true, nullable = false, length = 150, name = "login")
+    @Column(unique = true,nullable = false, length = 150)
     @NotNull
-    private String usuario;
+    private String email;
 
     @Column(nullable = false, length = 22)
     @NotNull
     private String senha;
-
-    public Usuario(){
+    
+    public Administrador(){
 
     }
 
@@ -38,12 +38,12 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {
@@ -58,8 +58,8 @@ public class Usuario implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id);
+        Administrador administrador = (Administrador) o;
+        return Objects.equals(id, administrador.id);
     }
 
     @Override
