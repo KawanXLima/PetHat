@@ -5,6 +5,8 @@ import com.projetopm.veterinaria.model.repositories.ClienteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -13,12 +15,16 @@ import org.springframework.web.server.ResponseStatusException;
 public class ClienteService {
 
     int flag = 0;
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private ClienteRepository repository;
 
+
     public Cliente cadastroCliente(Cliente cliente){
-       return repository.save(cliente);
+        String encoder = this.passwordEncoder.encode(cliente.getSenha());
+        cliente.setSenha(encoder);
+        return repository.save(cliente);
     }
 
     public Cliente encontrarPorId(Integer id){
@@ -46,9 +52,10 @@ public class ClienteService {
     }
 
     public int validacaoLogin(String email, String senha){
-        Cliente cliente = repository.findByEmailAndSenha(email, senha);
-
-        if(cliente.getEmail().equals(email) && cliente.getSenha().equals(senha)){
+        Cliente cliente = repository.findByEmail(email);
+        Boolean semigual = this.passwordEncoder.matches(senha,cliente.getSenha());
+        System.out.println(semigual);
+        if(cliente.getEmail().equals(email) && semigual){
             flag = 1;
             System.out.println(flag);
             return flag;
@@ -63,4 +70,7 @@ public class ClienteService {
         return repository.findByEmail(email);
     }
 
+    public Cliente senha(String email, String senha) {
+        return repository.findByEmailAndSenha(email,senha);
+    }
 }
