@@ -41,7 +41,7 @@ public class Veterinario implements Serializable {
     @NotNull
     private String crmvce;
 
-    @Column(nullable = false, length = 6)
+    @Column(nullable = false, length = 11)
     @NotNull
     private String dataPortariaHabilitacao;
 
