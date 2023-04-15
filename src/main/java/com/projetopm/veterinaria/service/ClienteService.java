@@ -5,6 +5,8 @@ import com.projetopm.veterinaria.model.repositories.ClienteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -13,12 +15,16 @@ import org.springframework.web.server.ResponseStatusException;
 public class ClienteService {
 
     int flag = 0;
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private ClienteRepository repository;
 
+
     public Cliente cadastroCliente(Cliente cliente){
-       return repository.save(cliente);
+        String encoder = this.passwordEncoder.encode(cliente.getSenha());
+        cliente.setSenha(encoder);
+        return repository.save(cliente);
     }
 
     public Cliente encontrarPorId(Integer id){
@@ -46,21 +52,26 @@ public class ClienteService {
     }
 
     public int validacaoLogin(String email, String senha){
-        Cliente cliente = repository.findByEmailAndSenha(email, senha);
-
-        if(cliente.getEmail().equals(email) && cliente.getSenha().equals(senha)){
-            flag = 1;
-            System.out.println(flag);
-            return flag;
-        } else {
-            System.out.println(flag);
+        Cliente cliente = repository.findByEmail(email);
+        if(cliente.getEmail().equals(email) && verificarSenha(cliente, senha)){
+            int flag = 1;
             return flag;
         }
-
+            System.out.println(flag);
+            return flag;
     }
 
     public Cliente buscarPorEmail(String email){
         return repository.findByEmail(email);
     }
 
+    private boolean verificarSenha(Cliente cliente, String senha){
+        Boolean criptografia = this.passwordEncoder.matches(senha,cliente.getSenha());
+        System.out.println(criptografia);
+        if(criptografia){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

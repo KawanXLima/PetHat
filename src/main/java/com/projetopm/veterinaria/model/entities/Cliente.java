@@ -31,7 +31,7 @@ public class Cliente implements Serializable {
     @NotNull
     private String email;
 
-    @Column(nullable = false, length = 22)
+    @Column(nullable = false)
     @NotNull
     private String senha;
 
