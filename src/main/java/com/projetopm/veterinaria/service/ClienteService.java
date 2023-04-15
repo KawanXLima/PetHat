@@ -53,24 +53,25 @@ public class ClienteService {
 
     public int validacaoLogin(String email, String senha){
         Cliente cliente = repository.findByEmail(email);
-        Boolean semigual = this.passwordEncoder.matches(senha,cliente.getSenha());
-        System.out.println(semigual);
-        if(cliente.getEmail().equals(email) && semigual){
-            flag = 1;
-            System.out.println(flag);
-            return flag;
-        } else {
-            System.out.println(flag);
+        if(cliente.getEmail().equals(email) && verificarSenha(cliente, senha)){
+            int flag = 1;
             return flag;
         }
-
+            System.out.println(flag);
+            return flag;
     }
 
     public Cliente buscarPorEmail(String email){
         return repository.findByEmail(email);
     }
 
-    public Cliente senha(String email, String senha) {
-        return repository.findByEmailAndSenha(email,senha);
+    private boolean verificarSenha(Cliente cliente, String senha){
+        Boolean criptografia = this.passwordEncoder.matches(senha,cliente.getSenha());
+        System.out.println(criptografia);
+        if(criptografia){
+            return true;
+        } else{
+            return false;
+        }
     }
 }
