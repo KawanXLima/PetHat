@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -34,7 +35,7 @@ public class AdministradorController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Veterinario cadastroVeterinario(@RequestBody Veterinario veterinario){
+    public Veterinario cadastroVeterinario(@RequestBody Veterinario veterinario) throws ParseException {
         return service.cadastroVeterinario(veterinario);
     }
 

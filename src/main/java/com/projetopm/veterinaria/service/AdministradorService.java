@@ -2,15 +2,17 @@ package com.projetopm.veterinaria.service;
 
 
 import com.projetopm.veterinaria.model.entities.Administrador;
-import com.projetopm.veterinaria.model.entities.Cliente;
 import com.projetopm.veterinaria.model.entities.Veterinario;
 import com.projetopm.veterinaria.model.repositories.AdministradorRepository;
 import com.projetopm.veterinaria.model.repositories.VeterinarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Service
@@ -20,6 +22,8 @@ public class AdministradorService {
 
     @Autowired
     AdministradorRepository repository;
+
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     VeterinarioRepository vet_repository;
@@ -49,8 +53,10 @@ public class AdministradorService {
         return vet_repository.findAll();
     }
 
-    public Veterinario cadastroVeterinario(Veterinario veterinario) {
-            return vet_repository.save(veterinario);
+    public Veterinario cadastroVeterinario(Veterinario veterinario) throws ParseException {
+        String encoder = this.passwordEncoder.encode(veterinario.getSenha());
+        veterinario.setSenha(encoder);
+        return vet_repository.save(veterinario);
     }
 
     public void deletarVeterinario(Integer id) {

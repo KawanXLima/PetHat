@@ -9,5 +9,4 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
     Cliente findByEmail(String email);
 
-    Cliente findByEmailAndSenha(String email, String senha);
 }

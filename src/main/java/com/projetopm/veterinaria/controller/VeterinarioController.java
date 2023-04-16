@@ -1,7 +1,6 @@
 package com.projetopm.veterinaria.controller;
 
 
-import com.projetopm.veterinaria.model.entities.Cliente;
 import com.projetopm.veterinaria.model.entities.Veterinario;
 import com.projetopm.veterinaria.service.VeterinarioService;
 import org.springframework.beans.factory.annotation.Autowired;

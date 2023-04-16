@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
@@ -29,11 +30,11 @@ public class Veterinario implements Serializable {
     @NotNull
     private String email;
 
-    @Column(nullable = false, length = 22)
+    @Column(nullable = false)
     @NotNull
     private String senha;
 
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = 15)
     @NotNull
     private String telefone;
 
@@ -42,8 +43,9 @@ public class Veterinario implements Serializable {
     private String crmvce;
 
     @Column(nullable = false, length = 11)
+    @JsonFormat(pattern = "dd/MM/yyyy" , timezone = "GMT-3")
     @NotNull
-    private String dataPortariaHabilitacao;
+    private Date dataPortariaHabilitacao;
 
     @Column
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -54,7 +56,7 @@ public class Veterinario implements Serializable {
 
     }
 
-    public Veterinario(Integer id, String nome, String email, String senha, String telefone, String crmvce, String dataPortariaHabilitacao, LocalDate dataCadastro) {
+    public Veterinario(Integer id, String nome, String email, String senha, String telefone, String crmvce, Date dataPortariaHabilitacao, LocalDate dataCadastro) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -114,11 +116,11 @@ public class Veterinario implements Serializable {
         this.crmvce = crmvce;
     }
 
-    public String getDataPortariaHabilitacao() {
+    public Date getDataPortariaHabilitacao() {
         return dataPortariaHabilitacao;
     }
 
-    public void setDataPortariaHabilitacao(String dataPortariaHabilitacao) {
+    public void setDataPortariaHabilitacao(Date dataPortariaHabilitacao) {
         this.dataPortariaHabilitacao = dataPortariaHabilitacao;
     }
 
