@@ -69,10 +69,12 @@ public class AdministradorService {
     public Veterinario atualizarVeterinario(Integer id, Veterinario veterinarioAtualizado) {
         Veterinario veterinario = vet_repository.findById(id).orElse(null);
 
+        String encoder = this.passwordEncoder.encode(veterinarioAtualizado.getSenha());
+
         veterinario.setNome(veterinarioAtualizado.getNome());
         veterinario.setEmail(veterinarioAtualizado.getEmail());
         veterinario.setTelefone(veterinarioAtualizado.getTelefone());
-        veterinario.setSenha(veterinarioAtualizado.getSenha());
+        veterinario.setSenha(encoder);
 
         return vet_repository.save(veterinario);
     }

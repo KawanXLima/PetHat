@@ -34,11 +34,12 @@ public class ClienteService {
     public Cliente atualizarCliente(Integer id, Cliente clienteAtualizado){
 
         Cliente cliente = repository.findById(id).orElse(null);
+        String encoder = this.passwordEncoder.encode(cliente.getSenha());
 
         cliente.setNome(clienteAtualizado.getNome());
         cliente.setCpf(clienteAtualizado.getCpf());
         cliente.setEmail(clienteAtualizado.getEmail());
-        cliente.setSenha(clienteAtualizado.getSenha());
+        cliente.setSenha(encoder);
 
         return repository.save(cliente);
 
