@@ -1,6 +1,7 @@
 package com.projetopm.veterinaria.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +9,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -38,6 +41,10 @@ public class Cliente implements Serializable {
     @Column
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "cliente")
+    private List<Pet> pet = new ArrayList<>();;
 
     public Cliente() {
     }
@@ -91,6 +98,10 @@ public class Cliente implements Serializable {
         this.senha = senha;
     }
 
+    public List<Pet> getPet() {
+        return pet;
+    }
+
     public LocalDate getDataCadastro() {
         return dataCadastro;
     }
@@ -120,6 +131,8 @@ public class Cliente implements Serializable {
                 ", cpf='" + cpf + '\'' +
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
+                ", dataCadastro=" + dataCadastro +
+                ", pet=" + pet +
                 '}';
     }
 
