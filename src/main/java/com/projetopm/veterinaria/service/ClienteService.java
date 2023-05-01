@@ -34,15 +34,19 @@ public class ClienteService {
     public Cliente atualizarCliente(Integer id, Cliente clienteAtualizado){
 
         Cliente cliente = repository.findById(id).orElse(null);
-        String encoder = this.passwordEncoder.encode(cliente.getSenha());
 
-        cliente.setNome(clienteAtualizado.getNome());
-        cliente.setCpf(clienteAtualizado.getCpf());
-        cliente.setEmail(clienteAtualizado.getEmail());
-        cliente.setSenha(encoder);
-
-        return repository.save(cliente);
-
+        if(!cliente.getSenha().equals(clienteAtualizado.getSenha())){
+            cliente.setNome(clienteAtualizado.getNome());
+            cliente.setCpf(clienteAtualizado.getCpf());
+            cliente.setEmail(clienteAtualizado.getEmail());
+            criptografiaSenhaAtualizada(clienteAtualizado.getSenha(), cliente);
+            return repository.save(cliente);
+        }
+            cliente.setNome(clienteAtualizado.getNome());
+            cliente.setCpf(clienteAtualizado.getCpf());
+            cliente.setEmail(clienteAtualizado.getEmail());
+            cliente.setSenha(clienteAtualizado.getSenha());
+            return repository.save(cliente);
     }
 
     public void deletarCliente(Integer id) {
@@ -74,5 +78,10 @@ public class ClienteService {
         } else{
             return false;
         }
+    }
+
+    private void criptografiaSenhaAtualizada(String senha, Cliente cliente){
+        String encoder = this.passwordEncoder.encode(senha);
+        cliente.setSenha(encoder);
     }
 }
