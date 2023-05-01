@@ -22,9 +22,9 @@ public class PetController {
        return service.cadastroPet(pet, email);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Pet>> buscarTodos(){
-        List<Pet> list = service.findAll();
+    @GetMapping("/{email}")
+    public ResponseEntity<List<Pet>> buscarTodos(@PathVariable String email){
+        List<Pet> list = service.findAll(email);
         return ResponseEntity.ok().body(list);
     }
 

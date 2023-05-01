@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,8 +27,16 @@ public class PetService {
         return repositoryPet.save(pet);
     }
 
-    public List<Pet> findAll() {
-        return repositoryPet.findAll();
+    public List<Pet> findAll(String email) {
+        List<Pet> petList = new ArrayList<>();
+        List<Pet> aux = repositoryPet.findAll();
+        for(Pet pet: aux)
+        {
+            if(pet.getCliente().getEmail().equals(email)){
+                petList.add(pet);
+            }
+        }
+        return petList;
     }
 
     public Pet encontrarPorId(Integer id) {
