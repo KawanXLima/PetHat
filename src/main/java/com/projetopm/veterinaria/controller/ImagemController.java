@@ -1,5 +1,7 @@
 package com.projetopm.veterinaria.controller;
 
+import com.projetopm.veterinaria.model.entities.Cliente;
+import com.projetopm.veterinaria.service.ClienteService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -26,11 +28,15 @@ public class ImagemController {
 
     public static final String DIRECTORY = System.getProperty("user.home") + "/Downloads/uploads/";
 
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadFiles(@RequestParam("file")MultipartFile file) throws IOException {
+    private ClienteService service;
 
-            String filename = StringUtils.cleanPath(file.getOriginalFilename());
+    @PostMapping("/upload/{id}")
+    public ResponseEntity<String> uploadFiles(@RequestParam("file")MultipartFile file, @PathVariable("id") Integer id) throws IOException {
+
+            String filename = StringUtils.cleanPath(id+"."+ file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1));
+            System.out.println(filename);
             Path fileStorage = get(DIRECTORY, filename).toAbsolutePath().normalize();
+            System.out.println(fileStorage);
             copy(file.getInputStream(), fileStorage, REPLACE_EXISTING);
             return ResponseEntity.ok().body(filename);
 
@@ -39,6 +45,7 @@ public class ImagemController {
     @GetMapping("exibir/{filename}")
     public ResponseEntity<Resource> downloadFiles(@PathVariable("filename") String filename) throws IOException {
         Path filePath = get(DIRECTORY).toAbsolutePath().normalize().resolve(filename);
+        System.out.println("FilePath"+ filePath);
         if(!Files.exists(filePath)) {
             throw new FileNotFoundException(filename + " was not found on the server");
         }
