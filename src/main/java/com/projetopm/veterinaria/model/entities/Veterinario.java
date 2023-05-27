@@ -3,12 +3,15 @@ package com.projetopm.veterinaria.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.projetopm.veterinaria.model.entities.enumerator.Turno;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -38,6 +41,13 @@ public class Veterinario implements Serializable {
     @NotNull
     private String telefone;
 
+    @Column(nullable = false, length = 150)
+    @NotNull
+    private String especialidade;
+
+    @Enumerated(EnumType.STRING)
+    private Turno turno;
+
     @Column(unique = true, nullable = false, length = 9)
     @NotNull
     private String crmvce;
@@ -46,6 +56,9 @@ public class Veterinario implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy" , timezone = "GMT-3")
     @NotNull
     private Date dataPortariaHabilitacao;
+
+    @OneToMany(mappedBy = "veterinario")
+    private List<Consulta> consultaList = new ArrayList<>();
 
     @Column
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -56,17 +69,18 @@ public class Veterinario implements Serializable {
 
     }
 
-    public Veterinario(Integer id, String nome, String email, String senha, String telefone, String crmvce, Date dataPortariaHabilitacao, LocalDate dataCadastro) {
+    public Veterinario(Integer id, String nome, String email, String senha, String telefone, String especialidade,Turno turno, String crmvce, Date dataPortariaHabilitacao, LocalDate dataCadastro) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
+        this.especialidade = especialidade;
+        this.turno = turno;
         this.crmvce = crmvce;
         this.dataPortariaHabilitacao = dataPortariaHabilitacao;
         this.dataCadastro = dataCadastro;
     }
-
 
     public Integer getId() {
         return id;
@@ -114,6 +128,26 @@ public class Veterinario implements Serializable {
 
     public void setCrmvce(String crmvce) {
         this.crmvce = crmvce;
+    }
+
+    public Turno getTurno() {
+        return turno;
+    }
+
+    public void setTurno(Turno turno) {
+        this.turno = turno;
+    }
+
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+
+    public List<Consulta> getConsultaList() {
+        return consultaList;
     }
 
     public Date getDataPortariaHabilitacao() {

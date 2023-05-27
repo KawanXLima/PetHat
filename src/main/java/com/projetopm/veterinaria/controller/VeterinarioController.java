@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Locale;
+
 @RestController
 @RequestMapping("/api/veterinario")
 public class VeterinarioController {
@@ -37,5 +40,12 @@ public class VeterinarioController {
     public ResponseEntity<Integer> buscarid(@PathVariable String email){
         Veterinario veterinario = service.buscarPorEmail(email);
         return ResponseEntity.ok(veterinario.getId());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Veterinario>> buscarPorEspecialidade(@RequestParam String especialidade){
+
+        List<Veterinario> listVet = service.encontrarPorEspecialidade(especialidade.toLowerCase());
+        return ResponseEntity.ok().body(listVet);
     }
 }

@@ -43,7 +43,6 @@ public class Pet implements Serializable {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-
     public Pet(){
 
     }
