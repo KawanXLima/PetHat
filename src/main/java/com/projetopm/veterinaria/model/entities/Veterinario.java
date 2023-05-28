@@ -2,6 +2,7 @@ package com.projetopm.veterinaria.model.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.projetopm.veterinaria.model.entities.enumerator.Turno;
 import jakarta.persistence.*;
@@ -57,6 +58,7 @@ public class Veterinario implements Serializable {
     @NotNull
     private Date dataPortariaHabilitacao;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "veterinario")
     private List<Consulta> consultaList = new ArrayList<>();
 
@@ -178,21 +180,6 @@ public class Veterinario implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-
-    @Override
-    public String toString() {
-        return "Veterinario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", crmvce='" + crmvce + '\'' +
-                ", dataPortariaHabilitacao='" + dataPortariaHabilitacao + '\'' +
-                ", dataCadastro=" + dataCadastro +
-                '}';
     }
 
     @PrePersist

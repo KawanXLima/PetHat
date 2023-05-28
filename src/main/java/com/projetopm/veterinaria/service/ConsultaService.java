@@ -1,6 +1,5 @@
 package com.projetopm.veterinaria.service;
 
-import com.projetopm.veterinaria.model.entities.Cliente;
 import com.projetopm.veterinaria.model.entities.Consulta;
 import com.projetopm.veterinaria.model.entities.Pet;
 import com.projetopm.veterinaria.model.entities.Veterinario;
@@ -10,27 +9,27 @@ import com.projetopm.veterinaria.model.repositories.VeterinarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.Optional;
 
 @Service
 public class ConsultaService {
 
     @Autowired
-    private ConsultaRepository repository;
+    private ConsultaRepository consultaRepository;
+
+    @Autowired
+    private VeterinarioRepository veterinarioRepository;
 
     @Autowired
     private PetRepository petRepository;
 
-    @Autowired
-    private VeterinarioRepository vetRepository;
-    public Consulta solicitarConsulta(Consulta consulta, Integer id, String email){
-        Optional<Pet> pet = petRepository.findById(id);
-        Veterinario vet = vetRepository.findByEmail(email);
+    public Consulta save(Consulta consulta, Integer id, String email){
+        Optional<Pet> petOptional = petRepository.findById(id);
+        Veterinario veterinario = veterinarioRepository.findByEmail(email);
 
-        consulta.setPet(pet.get());
-        consulta.setVeterinario(vet);
+        consulta.setPet(petOptional.get());
+        consulta.setVeterinario(veterinario);
 
-        return repository.save(consulta);
+        return consultaRepository.save(consulta);
     }
 }

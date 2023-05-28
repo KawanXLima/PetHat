@@ -1,29 +1,25 @@
 package com.projetopm.veterinaria.model.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_consulta")
 public class Consulta implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("_id")
     private Integer id;
 
     @Column(nullable = false, length = 11)
-    @JsonFormat(timezone = "GMT-3")
-    private Calendar data;
+    @NotNull
+    private String hora;
 
     @ManyToOne
     @JoinColumn(name = "veterinario_id")
@@ -33,13 +29,20 @@ public class Consulta implements Serializable {
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
-    public Consulta(){}
+    @Column
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataCadastro;
 
-    public Consulta(Integer id, Calendar data, Veterinario veterinario, Pet pet) {
+    public Consulta(){
+
+    }
+
+    public Consulta(Integer id, String hora, Veterinario veterinario, Pet pet, LocalDate localDate) {
         this.id = id;
-        this.data = data;
+        this.hora = hora;
         this.veterinario = veterinario;
         this.pet = pet;
+        this.dataCadastro = localDate;
     }
 
     public Integer getId() {
@@ -50,21 +53,13 @@ public class Consulta implements Serializable {
         this.id = id;
     }
 
-    public Calendar getData() {
-        return data;
+    public String getHora() {
+        return hora;
     }
 
-    public void setData(Calendar data) {
-        this.data = data;
+    public void setHora(String hora) {
+        this.hora = hora;
     }
-
-//    public Time getHora() {
-//        return hora;
-//    }
-
-//    public void setHora(Time hora) {
-//        this.hora = hora;
-//    }
 
     public Veterinario getVeterinario() {
         return veterinario;
@@ -82,6 +77,14 @@ public class Consulta implements Serializable {
         this.pet = pet;
     }
 
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,5 +96,10 @@ public class Consulta implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @PrePersist
+    public void prePersistencia(){
+        setDataCadastro(LocalDate.now());
     }
 }
