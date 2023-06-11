@@ -1,10 +1,13 @@
 package com.projetopm.veterinaria.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.projetopm.veterinaria.model.entities.enumerator.StatusConsulta;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -15,11 +18,17 @@ public class Consulta implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("_id")
     private Integer id;
 
     @Column(nullable = false, length = 11)
     @NotNull
     private String hora;
+
+    @Column(nullable = false, length = 11)
+    @JsonFormat(pattern = "dd/MM/yyyy" , timezone = "GMT-3")
+    @NotNull
+    private String dataConsulta;
 
     @ManyToOne
     @JoinColumn(name = "veterinario_id")
@@ -33,16 +42,21 @@ public class Consulta implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
 
+    @Enumerated(EnumType.STRING)
+    private StatusConsulta statusConsulta;
+
     public Consulta(){
 
     }
 
-    public Consulta(Integer id, String hora, Veterinario veterinario, Pet pet, LocalDate localDate) {
+    public Consulta(Integer id, String hora, Veterinario veterinario, Pet pet, LocalDate localDate, StatusConsulta statusConsulta, String dataConsulta) {
         this.id = id;
         this.hora = hora;
         this.veterinario = veterinario;
         this.pet = pet;
         this.dataCadastro = localDate;
+        this.statusConsulta = statusConsulta;
+        this.dataConsulta = dataConsulta;
     }
 
     public Integer getId() {
@@ -83,6 +97,22 @@ public class Consulta implements Serializable {
 
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public String getDataConsulta() {
+        return dataConsulta;
+    }
+
+    public void setDataConsulta(String dataConsulta) {
+        this.dataConsulta = dataConsulta;
+    }
+
+    public StatusConsulta getStatusConsulta() {
+        return statusConsulta;
+    }
+
+    public void setStatusConsulta(StatusConsulta statusConsulta) {
+        this.statusConsulta = statusConsulta;
     }
 
     @Override
