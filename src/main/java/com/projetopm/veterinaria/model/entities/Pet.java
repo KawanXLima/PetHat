@@ -43,11 +43,16 @@ public class Pet implements Serializable {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+
+    @OneToOne
+    @JoinColumn(name = "prontuario_id")
+    private Prontuario prontuario;
+
     public Pet(){
 
     }
 
-    public Pet(Integer id, String nome, String especie, String sexo, String raca, Integer idade, Cliente cliente, LocalDate dataCadastro) {
+    public Pet(Integer id, String nome, String especie, String sexo, String raca, Integer idade, Cliente cliente, LocalDate dataCadastro, Prontuario prontuario) {
         this.id = id;
         this.nome = nome;
         this.especie = especie;
@@ -120,6 +125,14 @@ public class Pet implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Prontuario getProntuario() {
+        return prontuario;
+    }
+
+    public void setProntuario(Prontuario prontuario) {
+        this.prontuario = prontuario;
     }
 
     @Override
