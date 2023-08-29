@@ -25,21 +25,17 @@ public class ProntuarioService {
     @Autowired
     private PetRepository repositoryPet;
 
+
+    //GET
+    public List<Prontuario> listarProntuario(Integer id) {
+        return repositoryProntuario.findAllById(id);
+    }
+
+    //POST
     public Prontuario cadastroProntuario(Prontuario prontuario, Integer id) {
-        Optional<Pet> pet = repositoryPet.findById(id);
+        Pet pet = repositoryPet.findById(id).orElse(null);
         prontuario.setPet(pet);
         return repositoryProntuario.save(prontuario);
     }
 
-    public List<Prontuario> listarProntuario(String id) {
-        List<Prontuario> prontuarioList = new ArrayList<>();
-        List<Prontuario> aux = repositoryProntuario.findAll();
-        for(Prontuario prontuario: aux)
-        {
-            if(prontuario.getPet().getId().equals(id)){
-                prontuarioList.add(prontuario);
-            }
-        }
-        return prontuarioList;
-    }
 }

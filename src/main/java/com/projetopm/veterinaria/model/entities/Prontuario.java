@@ -54,7 +54,7 @@ public class Prontuario implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "pet_id")
-    private Optional<Pet> pet;
+    private Pet pet;
 
     public Prontuario(){}
 
@@ -143,11 +143,11 @@ public class Prontuario implements Serializable {
         this.observacao = observacao;
     }
 
-    public Optional<Pet> getPet() {
+    public Pet getPet() {
         return pet;
     }
 
-    public void setPet(Optional<Pet> pet) {
+    public void setPet(Pet pet) {
         this.pet = pet;
     }
 
