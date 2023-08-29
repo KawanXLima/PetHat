@@ -1,12 +1,15 @@
 package com.projetopm.veterinaria.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -43,24 +46,24 @@ public class Pet implements Serializable {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-
-    @OneToOne
-    @JoinColumn(name = "prontuario_id")
-    private Prontuario prontuario;
+    @JsonIgnore
+    @OneToMany(mappedBy = "pet")
+    private List<Prontuario> prontuarioList = new ArrayList<>();
 
     public Pet(){
 
     }
 
-    public Pet(Integer id, String nome, String especie, String sexo, String raca, Integer idade, Cliente cliente, LocalDate dataCadastro, Prontuario prontuario) {
+    public Pet(Integer id, String nome, String especie, String sexo, String raca, Integer idade, LocalDate dataCadastro, Cliente cliente, List<Prontuario> prontuarioList) {
         this.id = id;
         this.nome = nome;
         this.especie = especie;
         this.sexo = sexo;
         this.raca = raca;
         this.idade = idade;
-        this.cliente = cliente;
         this.dataCadastro = dataCadastro;
+        this.cliente = cliente;
+        this.prontuarioList = prontuarioList;
     }
 
     public String getNome() {
@@ -127,12 +130,12 @@ public class Pet implements Serializable {
         this.cliente = cliente;
     }
 
-    public Prontuario getProntuario() {
-        return prontuario;
+    public List<Prontuario> getProntuarioList() {
+        return prontuarioList;
     }
 
-    public void setProntuario(Prontuario prontuario) {
-        this.prontuario = prontuario;
+    public void setProntuarioList(List<Prontuario> prontuarioList) {
+        this.prontuarioList = prontuarioList;
     }
 
     @Override

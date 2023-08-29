@@ -52,7 +52,7 @@ public class Prontuario implements Serializable {
     @NotNull
     private String observacao;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
 

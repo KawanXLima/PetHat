@@ -1,5 +1,6 @@
 package com.projetopm.veterinaria.service;
 
+import com.projetopm.veterinaria.model.entities.Consulta;
 import com.projetopm.veterinaria.model.entities.Pet;
 import com.projetopm.veterinaria.model.entities.Prontuario;
 import com.projetopm.veterinaria.model.repositories.PetRepository;
@@ -28,7 +29,15 @@ public class ProntuarioService {
 
     //GET
     public List<Prontuario> listarProntuario(Integer id) {
-        return repositoryProntuario.findAllById(id);
+        List<Prontuario> prontuarioList = new ArrayList<>();
+        List<Prontuario> aux = repositoryProntuario.findAll();
+        System.out.println(aux.size());
+        for(Prontuario prontuario : aux){
+            if(prontuario.getPet().getId().equals(id)){
+                prontuarioList.add(prontuario);
+            }
+        }
+        return prontuarioList;
     }
 
     //POST

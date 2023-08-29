@@ -15,7 +15,7 @@ public class ProntuarioController {
     ProntuarioService service;
 
 
-    @PostMapping("/idPet/{id}")
+    @PostMapping("/idPet/{idPet}")
     public Prontuario cadastroProntuario(@RequestBody Prontuario prontuario, @PathVariable Integer idPet){
         return service.cadastroProntuario(prontuario, idPet);
     }
