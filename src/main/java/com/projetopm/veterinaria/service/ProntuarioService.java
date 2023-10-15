@@ -3,8 +3,10 @@ package com.projetopm.veterinaria.service;
 import com.projetopm.veterinaria.model.entities.Consulta;
 import com.projetopm.veterinaria.model.entities.Pet;
 import com.projetopm.veterinaria.model.entities.Prontuario;
+import com.projetopm.veterinaria.model.entities.Receita;
 import com.projetopm.veterinaria.model.repositories.PetRepository;
 import com.projetopm.veterinaria.model.repositories.ProntuarioRepository;
+import com.projetopm.veterinaria.model.repositories.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +27,9 @@ public class ProntuarioService {
 
     @Autowired
     private PetRepository repositoryPet;
+
+    @Autowired
+    private ReceitaRepository receitaRepository;
 
 
     //GET

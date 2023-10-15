@@ -56,9 +56,13 @@ public class Prontuario implements Serializable {
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
+    @OneToOne
+    @JoinColumn(name = "receita_id")
+    private Receita receita;
+
     public Prontuario(){}
 
-    public Prontuario(Integer id, String data, String horario, String imunizacao, String sinaisClinicos, String exames, String prescricao, String diagnostico, String observacao, Pet pet) {
+    public Prontuario(Integer id, String data, String horario, String imunizacao, String sinaisClinicos, String exames, String prescricao, String diagnostico, String observacao, Pet pet, Receita receita) {
         this.id = id;
         this.data = data;
         this.horario = horario;
@@ -69,6 +73,7 @@ public class Prontuario implements Serializable {
         this.diagnostico = diagnostico;
         this.observacao = observacao;
         this.pet = pet;
+        this.receita = receita;
     }
 
     public Integer getId() {
@@ -149,6 +154,14 @@ public class Prontuario implements Serializable {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    public Receita getReceita() {
+        return receita;
+    }
+
+    public void setReceita(Receita receita) {
+        this.receita = receita;
     }
 
     @Override
