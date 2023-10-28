@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Objects;
-import java.util.Optional;
 
 @Entity
 @Table(name = "tb_prontuario")
@@ -60,9 +60,13 @@ public class Prontuario implements Serializable {
     @JoinColumn(name = "receita_id")
     private Receita receita;
 
+    @OneToOne
+    @JoinColumn(name = "assinatura_id")
+    private Assinatura assinatura;
+
     public Prontuario(){}
 
-    public Prontuario(Integer id, String data, String horario, String imunizacao, String sinaisClinicos, String exames, String prescricao, String diagnostico, String observacao, Pet pet, Receita receita) {
+    public Prontuario(Integer id, String data, String horario, String imunizacao, String sinaisClinicos, String exames, String prescricao, String diagnostico, String observacao, Pet pet, Receita receita, Assinatura assinatura) {
         this.id = id;
         this.data = data;
         this.horario = horario;
@@ -74,6 +78,7 @@ public class Prontuario implements Serializable {
         this.observacao = observacao;
         this.pet = pet;
         this.receita = receita;
+        this.assinatura = assinatura;
     }
 
     public Integer getId() {
@@ -162,6 +167,14 @@ public class Prontuario implements Serializable {
 
     public void setReceita(Receita receita) {
         this.receita = receita;
+    }
+
+    public Assinatura getAssinatura() {
+        return assinatura;
+    }
+
+    public void setAssinatura(Assinatura assinatura) {
+        this.assinatura = assinatura;
     }
 
     @Override
