@@ -33,20 +33,15 @@ public class Receita {
     @NotNull
     private String dataValidade;
 
-    @Column(nullable = false, length = 300)
-    @NotNull
-    private String clinicaResponsavel;
-
     public Receita() {
     }
 
-    public Receita(Integer id, String medicamentos, String dosagem, String dataEmissao, String dataValidade, String clinicaResponsavel) {
+    public Receita(Integer id, String medicamentos, String dosagem, String dataEmissao, String dataValidade) {
         this.id = id;
         this.medicamentos = medicamentos;
         this.dosagem = dosagem;
         this.dataEmissao = dataEmissao;
         this.dataValidade = dataValidade;
-        this.clinicaResponsavel = clinicaResponsavel;
     }
 
     public Integer getId() {
@@ -87,14 +82,6 @@ public class Receita {
 
     public void setDataValidade(String dataValidade) {
         this.dataValidade = dataValidade;
-    }
-
-    public String getClinicaResponsavel() {
-        return clinicaResponsavel;
-    }
-
-    public void setClinicaResponsavel(String clinicaResponsavel) {
-        this.clinicaResponsavel = clinicaResponsavel;
     }
 
     @Override
